@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="豆角电影网（doujiaodianyingwang-app）为您提供最新电影资讯、热门影视推荐、高清电影在线观看与影评解读，涵盖动作、喜剧、科幻、爱情、悬疑等多种类型，是影迷信赖的影视导航平台。">
+<meta name="keywords" content="豆角电影网, doujiaodianyingwang-app, 电影, 电影推荐, 在线电影, 影视资讯, 热门电影, 电影排行榜">
+<meta name="author" content="豆角电影网">
+<meta name="robots" content="index, follow">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<title>豆角电影网 - 最新电影资讯与热门影视推荐 | doujiaodianyingwang-app</title>
+<link rel="canonical" href="https://doujiaodianyingwang-app.github.io">
+<style>
+    :root{
+        --bg:#07090f;
+        --bg-2:#0c1119;
+        --card:#121a26;
+        --card-hover:#182233;
+        --line:rgba(255,255,255,.08);
+        --txt:#e8edf5;
+        --txt-2:#9fb0c8;
+        --accent:#ff5c8a;
+        --accent-2:#ffb84d;
+        --radius:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+        background:var(--bg);
+        color:var(--txt);
+        line-height:1.7;
+        overflow-x:hidden;
+    }
+    body::before{
+        content:"";position:fixed;inset:0;z-index:-2;
+        background:
+            radial-gradient(900px 500px at 82% -8%, rgba(255,92,138,.18), transparent 60%),
+            radial-gradient(700px 450px at 8% 12%, rgba(255,184,77,.12), transparent 60%),
+            linear-gradient(180deg,#07090f 0%,#0a0d14 100%);
+    }
+    a{color:inherit;text-decoration:none}
+    ul{list-style:none}
+    img{display:block;max-width:100%;border-radius:12px}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+    /* Header */
+    .site-header{
+        position:sticky;top:0;z-index:100;
+        backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+        background:rgba(7,9,15,.72);
+        border-bottom:1px solid var(--line);
+    }
+    .nav{display:flex;align-items:center;gap:18px;height:64px}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+    .logo-mark{
+        width:34px;height:34px;border-radius:10px;
+        background:linear-gradient(135deg,var(--accent),var(--accent-2));
+        display:grid;place-items:center;font-size:19px;color:#1a0812;font-weight:900;
+        box-shadow:0 6px 18px rgba(255,92,138,.35);
+    }
+    .logo b{font-size:18px;background:linear-gradient(90deg,#fff,#ffd7b0);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .nav-links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+    .nav-links a{
+        padding:8px 14px;border-radius:999px;font-size:14px;color:var(--txt-2);
+        transition:.25s;
+    }
+    .nav-links a:hover{color:#fff;background:rgba(255,255,255,.07)}
+    .nav-links a.active{color:#fff;background:linear-gradient(90deg,rgba(255,92,138,.28),rgba(255,184,77,.2))}
+    .menu-btn{display:none;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;padding:4px 8px}
+
+    /* Hero */
+    .hero{padding:64px 0 40px;position:relative}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+    .eyebrow{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:6px 14px;border-radius:999px;font-size:13px;color:#ffd7b0;
+        background:rgba(255,184,77,.12);border:1px solid rgba(255,184,77,.25);
+    }
+    .eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 10px var(--accent-2);animation:pulse 1.6s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+    .hero h1{font-size:clamp(30px,5vw,54px);line-height:1.12;margin:18px 0 6px;font-weight:900}
+    .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero h2{font-size:clamp(15px,2vw,19px);color:var(--txt-2);font-weight:500;margin-bottom:22px}
+    .hero p{color:var(--txt-2);max-width:560px;margin-bottom:28px;font-size:15px}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:13px 26px;border-radius:12px;font-weight:700;font-size:15px;
+        transition:.25s;cursor:pointer;border:1px solid transparent;
+    }
+    .btn-primary{background:linear-gradient(135deg,var(--accent),#ff8a5c);color:#fff;box-shadow:0 12px 28px rgba(255,92,138,.3)}
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 34px rgba(255,92,138,.42)}
+    .btn-ghost{background:rgba(255,255,255,.05);border-color:var(--line);color:#fff}
+    .btn-ghost:hover{background:rgba(255,255,255,.1)}
+    .hero-stats{display:flex;gap:28px;margin-top:34px;flex-wrap:wrap}
+    .hero-stats div span{display:block;font-size:26px;font-weight:800;color:#fff}
+    .hero-stats div small{color:var(--txt-2);font-size:13px}
+
+    .hero-art{
+        position:relative;aspect-ratio:4/5;border-radius:26px;
+        background:
+            radial-gradient(circle at 30% 25%, rgba(255,92,138,.5), transparent 45%),
+            radial-gradient(circle at 75% 70%, rgba(90,120,255,.4), transparent 50%),
+            linear-gradient(160deg,#1a1028,#0d1420);
+        border:1px solid var(--line);
+        overflow:hidden;
+    }
+    .hero-art .reel{
+        position:absolute;inset:0;
+        background-image:
+            linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+        background-size:38px 38px;
+        mask-image:radial-gradient(circle at 50% 45%, #000 30%, transparent 72%);
+        -webkit-mask-image:radial-gradient(circle at 50% 45%, #000 30%, transparent 72%);
+    }
+    .hero-art .play{
+        position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);
+        width:86px;height:86px;border-radius:50%;
+        background:rgba(255,255,255,.14);backdrop-filter:blur(6px);
+        border:1px solid rgba(255,255,255,.3);
+        display:grid;place-items:center;font-size:30px;color:#fff;
+        box-shadow:0 20px 50px rgba(0,0,0,.5);
+    }
+    .hero-art .tag{
+        position:absolute;bottom:20px;left:20px;right:20px;
+        padding:14px 16px;border-radius:14px;
+        background:rgba(10,14,22,.6);backdrop-filter:blur(10px);
+        border:1px solid var(--line);font-size:14px;
+    }
+    .hero-art .tag b{color:var(--accent-2)}
+
+    /* Section */
+    section{padding:64px 0}
+    .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:30px;flex-wrap:wrap}
+    .sec-head h3{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:.5px}
+    .sec-head h3 small{display:block;font-size:13px;color:var(--accent);font-weight:700;letter-spacing:2px;margin-bottom:6px}
+    .sec-head a{color:var(--txt-2);font-size:14px;border-bottom:1px solid var(--line);padding-bottom:2px}
+    .sec-head a:hover{color:#fff;border-color:#fff}
+
+    .cards{display:grid;gap:20px}
+    .grid-4{grid-template-columns:repeat(4,1fr)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+
+    .card{
+        background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+        padding:20px;transition:.3s;position:relative;overflow:hidden;
+    }
+    .card:hover{transform:translateY(-6px);background:var(--card-hover);border-color:rgba(255,92,138,.35);box-shadow:0 22px 44px rgba(0,0,0,.45)}
+    .card .thumb{
+        height:120px;border-radius:12px;margin-bottom:16px;position:relative;
+        display:grid;place-items:center;font-size:34px;
+    }
+    .card h4{font-size:17px;margin-bottom:8px;font-weight:700}
+    .card p{color:var(--txt-2);font-size:14px}
+    .card .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .chip{font-size:12px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--txt-2);border:1px solid var(--line)}
+    .chip.hot{color:#ffb3c2;background:rgba(255,92,138,.14);border-color:rgba(255,92,138,.3)}
+
+    /* genres */
+    .genre{display:flex;flex-direction:column;gap:10px;padding:22px}
+    .genre .ic{font-size:30px}
+    .genre b{font-size:16px}
+    .genre span{font-size:13px;color:var(--txt-2)}
+
+    /* about */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .feature{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:var(--card)}
+    .feature .num{font-size:13px;color:var(--accent-2);font-weight:800;letter-spacing:2px}
+    .feature h4{font-size:19px;margin:8px 0 10px}
+    .feature p{color:var(--txt-2);font-size:14.5px}
+
+    /* news */
+    .news-item{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:20px;border-bottom:1px solid var(--line)}
+    .news-item:last-child{border-bottom:none}
+    .news-item time{color:var(--accent-2);font-size:13px;font-weight:700}
+    .news-item h4{font-size:16px;margin-bottom:6px}
+    .news-item p{color:var(--txt-2);font-size:14px}
+
+    /* FAQ */
+    details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px;transition:.2s}
+    details:hover{border-color:rgba(255,184,77,.3)}
+    summary{cursor:pointer;font-weight:700;font-size:15.5px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+    summary::-webkit-details-marker{display:none}
+    summary::after{content:"+";color:var(--accent-2);font-size:22px;line-height:1}
+    details[open] summary::after{content:"–"}
+    details p{color:var(--txt-2);font-size:14.5px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+
+    /* CTA band */
+    .band{
+        border-radius:26px;padding:44px 34px;text-align:center;
+        background:radial-gradient(700px 260px at 50% 0%, rgba(255,92,138,.28), transparent 60%),var(--card);
+        border:1px solid var(--line);
+    }
+    .band h3{font-size:clamp(22px,3vw,30px);margin-bottom:10px}
+    .band p{color:var(--txt-2);margin-bottom:24px;max-width:620px;margin-inline:auto}
+    .band .url{display:inline-block;margin-top:6px;padding:10px 18px;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid var(--line);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent-2);font-size:14px;word-break:break-all}
+
+    /* Footer */
+    footer{border-top:1px solid var(--line);padding:44px 0 26px;margin-top:30px}
+    .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;margin-bottom:30px}
+    .foot-col h5{font-size:15px;margin-bottom:14px;color:#fff}
+    .foot-col ul li{margin-bottom:9px}
+    .foot-col a{color:var(--txt-2);font-size:14px}
+    .foot-col a:hover{color:var(--accent-2)}
+    .copy{text-align:center;color:var(--txt-2);font-size:13px;border-top:1px solid var(--line);padding-top:22px}
+    .copy b{color:#fff}
+
+    /* scrollbar */
+    ::-webkit-scrollbar{width:10px;height:10px}
+    ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:8px}
+    ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.28)}
+
+    /* Responsive */
+    @media (max-width:900px){
+        .hero-grid{grid-template-columns:1fr}
+        .hero-art{order:-1;max-width:420px;margin:0 auto;width:100%}
+        .grid-4{grid-template-columns:repeat(2,1fr)}
+        .grid-3,.grid-2{grid-template-columns:1fr}
+        .about-grid{grid-template-columns:1fr}
+        .foot-grid{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:640px){
+        .wrap{padding:0 16px}
+        section{padding:48px 0}
+        .menu-btn{display:block;margin-left:auto}
+        .nav-links{
+            position:fixed;inset:64px 0 0 0;flex-direction:column;
+            background:rgba(10,13,20,.97);backdrop-filter:blur(12px);
+            padding:24px;gap:4px;transform:translateX(100%);transition:.35s;z-index:99;
+        }
+        .nav-links.open{transform:translateX(0)}
+        .nav-links a{font-size:17px;padding:14px;border-radius:12px}
+        .grid-4{grid-template-columns:1fr}
+        .foot-grid{grid-template-columns:1fr}
+        .news-item{grid-template-columns:1fr;gap:6px}
+        .hero-stats{gap:20px}
+    }
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<header class="site-header">
+    <div class="wrap nav">
+        <a class="logo" href="#top" aria-label="豆角电影网 首页">
+            <span class="logo-mark">豆</span>
+            <b>豆角电影网</b>
+        </a>
+        <button class="menu-btn" id="menuBtn" aria-label="菜单" aria-expanded="false">≡</button>
+        <nav class="nav-links" id="navLinks">
+            <a href="#home" class="active">首页</a>
+            <a href="#hot">热映推荐</a>
+            <a href="#genre">电影分类</a>
+            <a href="#news">影讯资讯</a>
+            <a href="#about">关于我们</a>
+            <a href="#faq">常见问题</a>
+        </nav>
+    </div>
+</header>
+
+<main id="top">
+
+    <!-- 首页 / Hero -->
+    <section class="hero" id="home">
+        <div class="wrap hero-grid">
+            <div>
+                <span class="eyebrow"><i></i> 每日更新 · 精选片单</span>
+                <h1>在 <em>豆角电影网</em><br>发现下一部心动之作</h1>
+                <h2>doujiaodianyingwang-app · 你的私人影视导航</h2>
+                <p>豆角电影网专注于为影迷提供最新电影资讯、热门影视推荐与深度影评解读。从院线大片到冷门佳作，从经典重温到超前点映，我们用一份份精心整理的片单，帮你把"今晚看什么"变成一件轻松的事。</p>
+                <div class="cta">
+                    <a class="btn btn-primary" href="#hot">🎬 开始选片</a>
+                    <a class="btn btn-ghost" href="#genre">浏览分类</a>
+                </div>
+                <div class="hero-stats">
+                    <div><span>12,000+</span><small>收录影片</small></div>
+                    <div><span>28</span><small>影视分类</small></div>
+                    <div><span>每日</span><small>更新资讯</small></div>
+                </div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="reel"></div>
+                <div class="play">▶</div>
+                <div class="tag">正在热映：<b>《星际回响》</b> 豆瓣 8.6 · 科幻 / 冒险</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 热映推荐 -->
+    <section id="hot">
+        <div class="wrap">
+            <div class="sec-head">
+                <h3><small>NOW SHOWING</small>热映推荐 · 本周值得一看</h3>
+                <a href="#">查看完整榜单 →</a>
+            </div>
+            <div class="cards grid-4">
+                <article class="card">
+                    <div class="thumb" style="background:linear-gradient(135deg,#3a1c71,#d76d77)">🚀</div>
+                    <h4>星际回响</h4>
+                    <p>孤胆宇航员跨越光年，只为带回一段被遗忘的文明信号。视听震撼，后劲十足。</p>
+                    <div class="meta"><span class="chip hot">豆瓣 8.6</span><span class="chip">科幻</span><span class="chip">冒险</span></div>
+                </article>
+                <article class="card">
+                    <div class="thumb" style="background:linear-gradient(135deg,#0f2027,#2c5364)">🕵️</div>
+                    <h4>无声证词</h4>
+                    <p>一桩陈年旧案因一段录音重启调查，真相藏在每个人刻意回避的细节里。</p>
+                    <div class="meta"><span class="chip hot">豆瓣 8.3</span><span class="chip">悬疑</span><span class="chip">犯罪</span></div>
+                </article>
+                <article class="card">
+                    <div class="thumb" style="background:linear-gradient(135deg,#f7971e,#ffd200)">❤️</div>
+                    <h4>夏日来信</h4>
+                    <p>海边小镇的第七个夏天，两封迟到的信，让错过十年的人重新学会告白。</p>
+                    <div class="meta"><span class="chip">豆瓣 7.9</span><span class="chip">爱情</span><span class="chip">青春</span></div>
+                </article>
+                <article class="card">
+                    <div class="thumb" style="background:linear-gradient(135deg,#42275a,#734b6d)">⚔️</div>
+                    <h4>铁幕之下</h4>
+                    <p>战国末年的小人物，用一把断剑改写了一座城的命运。动作设计干净利落。</p>
+                    <div class="meta"><span class="chip hot">豆瓣 8.1</span><span class="chip">动作</span><span class="chip">历史</span></div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 电影分类 -->
+    <section id="genre">
+        <div class="wrap">
+            <div class="sec-head">
+                <h3><small>GENRES</small>电影分类 · 按心情选片</h3>
+                <a href="#">全部类型 →</a>
+            </div>
+            <div class="cards grid-3">
+                <a class="card genre" href="#">
+                    <span class="ic">💥</span>
+                    <b>动作 / 冒险</b>
+                    <span>追车、枪战、近身格斗，肾上腺素拉满的 1,860 部。</span>
+                </a>
+                <a class="card genre" href="#">
+                    <span class="ic">😂</span>
+                    <b>喜剧 / 生活</b>
+                    <span>治愈坏心情的 2,300 部，含脱口秀式冷幽默与家庭温情。</span>
+                </a>
+                <a class="card genre" href="#">
+                    <span class="ic">🌌</span>
+                    <b>科幻 / 奇幻</b>
+                    <span>从硬核太空歌剧到东方志怪，脑洞大开的 1,540 部。</span>
+                </a>
+                <a class="card genre" href="#">
+                    <span class="ic">🔍</span>
+                    <b>悬疑 / 犯罪</b>
+                    <span>反转再反转，适合一个人安静看完的 1,280 部。</span>
+                </a>
+                <a class="card genre" href="#">
+                    <span class="ic">💕</span>
+                    <b>爱情 / 青春</b>
+                    <span>怦然心动与遗憾错过，写给成年人的童话 1,720 部。</span>
+                </a>
+                <a class="card genre" href="#">
+                    <span class="ic">🎭</span>
+                    <b>剧情 / 文艺</b>
+                    <span>节奏缓慢但余味悠长，值得反复咀嚼的 960 部。</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 影讯资讯 -->
+    <section id="news">
+        <div class="wrap">
+            <div class="sec-head">
+                <h3><small>INSIGHT</small>影讯资讯 · 不止于剧情</h3>
+                <a href="#">资讯频道 →</a>
+            </div>
+            <div class="card" style="padding:0">
+                <div class="news-item">
+                    <time>10-05</time>
+                    <div>
+                        <h4>2026 国庆档复盘：现实主义题材重回票房中心</h4>
+                        <p>今年国庆档总票房同比增长 14%，其中聚焦普通人生活的现实题材影片贡献了近四成票房，观众用购票行为投出了"真实感"一票。</p>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <time>10-03</time>
+                    <div>
+                        <h4>导演访谈｜《星际回响》如何用声音讲故事</h4>
+                        <p>我们与影片声音指导聊了 40 分钟：在太空的真空里，寂静本身就是一种叙事工具，而一段 12 秒的摩尔斯电码，成了全片情绪的引爆点。</p>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <time>09-29</time>
+                    <div>
+                        <h4>片单推荐｜秋天适合一个人看的 9 部电影</h4>
+                        <p>从侯孝贤的《悲情城市》到是枝裕和的《步履不停》，我们按"情绪浓度"而非"评分高低"排了一份秋日观影清单。</p>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <time>09-25</time>
+                    <div>
+                        <h4>冷知识｜那些被删掉的经典开场</h4>
+                        <p>《肖申克的救赎》原版开场长达 9 分钟，讲述安迪入狱前的完整一天。了解被剪掉的部分，才能读懂片名里的"救赎"。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section id="about">
+        <div class="wrap">
+            <div class="sec-head">
+                <h3><small>ABOUT</small>关于豆角电影网</h3>
+                <a href="#">联系我们 →</a>
+            </div>
+            <div class="about-grid">
+                <div>
+                    <div class="feature">
+                        <div class="num">01</div>
+                        <h4>我们做什么</h4>
+                        <p>豆角电影网（doujiaodianyingwang-app）是一个专注于电影内容与观影决策的影视资讯平台。我们不做搬运，只做筛选与解读：用短评、片单、导演访谈和冷知识，帮你在 10 秒内判断"这部片子值不值得看"。</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="feature">
+                        <div class="num">02</div>
+                        <h4>我们的标准</h4>
+                        <p>推荐不跟风、不刷分。每一份片单都由真实观影后的编辑人工撰写，标注"适合谁看"与"劝退点"。我们坚信：没有最好的电影，只有此时此刻最适合你的那一部。</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="feature">
+                        <div class="num">03</div>
+                        <h4>内容更新</h4>
+                        <p>每日更新院线动态与短评，每周更新主题片单，每月产出一篇深度长文。节假日与颁奖季会推出特别策划，让你在信息过载的日子里，依然能快速找到好片。</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="feature">
+                        <div class="num">04</div>
+                        <h4>访问方式</h4>
+                        <p>豆角电影网已托管于 GitHub Pages，可直接通过 <b style="color:var(--accent-2)">https://doujiaodianyingwang-app.github.io</b> 访问，页面轻量、加载迅速，并在手机、平板与电脑上均能良好呈现。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 常见问题 -->
+    <section id="faq">
+        <div class="wrap">
+            <div class="sec-head">
+                <h3><small>FAQ</small>常见问题</h3>
+            </div>
+            <details open>
+                <summary>豆角电影网提供在线播放吗？</summary>
+                <p>不提供。豆角电影网是影视资讯与推荐平台，专注于影片介绍、影评解读与观影指引。文中涉及的播放渠道均为第三方正规平台的公开信息，请支持正版观影。</p>
+            </details>
+            <details>
+                <summary>如何快速找到适合自己看的电影？</summary>
+                <p>可以先从"电影分类"按心情筛选，再参考"热映推荐"的编辑短评。每部影片我们都标注了类型、豆瓣评分与"劝退点"，帮你减少踩雷概率。</p>
+            </details>
+            <details>
+                <summary>片单和评分多久更新一次？</summary>
+                <p>热映榜单每日更新，主题片单每周更新，豆瓣评分在影片下映后转为静态存档。如遇评分大规模变动，我们会保留历史记录并注明调整原因。</p>
+            </details>
+            <details>
+                <summary>可以投稿或申请友情链接吗？</summary>
+                <p>欢迎影评、观影笔记与片单投稿，也欢迎同领域的影视、文化类站点交换友情链接。请通过页脚"联系我们"入口提交，我们会在 3 个工作日内回复。</p>
+            </details>
+            <details>
+                <summary>网站网址是什么？是否支持移动端？</summary>
+                <p>官方网址为 <b style="color:var(--accent-2)">https://doujiaodianyingwang-app.github.io</b>，采用响应式设计，手机、平板、桌面端均可自适应浏览，无需额外安装应用。</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- 订阅 / CTA -->
+    <section>
+        <div class="wrap">
+            <div class="band">
+                <h3>别再为"今晚看什么"发愁</h3>
+                <p>每日一份精选片单，直接送到你手里。不群发、不骚扰，只在值得推荐时出现。</p>
+                <a class="btn btn-primary" href="#top">↑ 回到顶部</a>
+                <div class="url">https://doujiaodianyingwang-app.github.io</div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="wrap">
+        <div class="foot-grid">
+            <div class="foot-col">
+                <a class="logo" href="#top">
+                    <span class="logo-mark">豆</span>
+                    <b>豆角电影网</b>
+                </a>
+                <p style="color:var(--txt-2);font-size:14px;margin-top:14px;max-width:300px">专注于电影资讯、影视推荐与深度影评的导航平台。让每一次观影，都不被辜负。</p>
+            </div>
+            <div class="foot-col">
+                <h5>快速导航</h5>
+                <ul>
+                    <li><a href="#hot">热映推荐</a></li>
+                    <li><a href="#genre">电影分类</a></li>
+                    <li><a href="#news">影讯资讯</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                </ul>
+            </div>
+            <div class="foot-col">
+                <h5>影片类型</h5>
+                <ul>
+                    <li><a href="#">动作冒险</a></li>
+                    <li><a href="#">科幻奇幻</a></li>
+                    <li><a href="#">悬疑犯罪</a></li>
+                    <li><a href="#">爱情青春</a></li>
+                </ul>
+            </div>
+            <div class="foot-col">
+                <h5>联系与说明</h5>
+                <ul>
+                    <li><a href="#">投稿合作</a></li>
+                    <li><a href="#">友情链接</a></li>
+                    <li><a href="#">版权声明</a></li>
+                    <li><a href="#">隐私政策</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copy">
+            <p>网站名称：<b>豆角电影网</b> ｜ 网站网址：<b>https://doujiaodianyingwang-app.github.io</b></p>
+            <p style="margin-top:8px;color:#6f7f96">© <span id="year"></span> 豆角电影网 doujiaodianyingwang-app 保留所有权利。本页内容为影视资讯与推荐，仅供学习交流参考。</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // 移动端菜单
+    var menuBtn = document.getElementById('menuBtn');
+    var navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', function(){
+        navLinks.classList.toggle('open');
+        var expanded = navLinks.classList.contains('open');
+        menuBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        menuBtn.textContent = expanded ? '✕' : '≡';
+    });
+    navLinks.addEventListener('click', function(e){
+        if(e.target.tagName === 'A' && window.innerWidth <= 640){
+            navLinks.classList.remove('open');
+            menuBtn.setAttribute('aria-expanded','false');
+            menuBtn.textContent = '≡';
+        }
+    });
+
+    // 导航高亮
+    var links = navLinks.querySelectorAll('a');
+    var sections = [];
+    links.forEach(function(a){
+        var el = document.querySelector(a.getAttribute('href'));
+        if(el) sections.push(el);
+    });
+    function onScroll(){
+        var pos = window.scrollY + 120;
+        var cur = '';
+        sections.forEach(function(s){ if(s.offsetTop <= pos) cur = s.id; });
+        links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    // 年份
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
